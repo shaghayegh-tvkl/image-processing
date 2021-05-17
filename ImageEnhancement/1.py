@@ -1,14 +1,17 @@
 
-from skimage import io
 import cv2
 import os
 import matplotlib.pyplot as plt
+from skimage import io
+from skimage.transform import rescale
 
+file_names = [];
 #load images
 def load_images_from_folder(folder):
     images = []
     for filename in os.listdir(folder):
-        img = cv2.imread(os.path.join(folder,filename))
+        file_names.append(filename)
+        img = io.imread(os.path.join(folder,filename))
         if img is not None:
             images.append(img)    
     return images
@@ -17,4 +20,19 @@ images = load_images_from_folder("./images")
 print("******************* Loaded Data *******************") 
 print(images)
 print("***************************************************")
+
+#Size 
+i = 0;
+resized_images = []
+for image in images:
+    new_image = rescale(image, 0.3, anti_aliasing=False)
+    resized_images.append(new_image)
+    io.imsave(f'./scaling/{file_names[i]}',new_image)
+    i =  i + 1
+
+print("******************* Resized Data *******************") 
+print(resized_images)
+print("****************************************************")
+
+
 
