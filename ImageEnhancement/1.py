@@ -4,6 +4,7 @@ from skimage import exposure
 from skimage import io
 from skimage.transform import rescale
 from skimage.restoration import denoise_nl_means, estimate_sigma
+from skimage.filters import threshold_otsu
 import numpy as np
 
 
@@ -66,4 +67,19 @@ for image in resized_images:
     sigma_est = np.mean(estimate_sigma(image, multichannel=True))
     denoise = denoise_nl_means(image, h=0.8 * sigma_est, fast_mode=True,**patch_kw)
     io.imsave(f'./denoising/resized-{file_names[j]}',denoise)
+    j = j + 1
+
+#Thresholding 
+window_size = 25
+
+j = 0
+for image in images:
+    binary_global = image > threshold_otsu(image)
+    io.imsave(f'./thresholding/{file_names[j]}',binary_global)
+    j = j + 1
+
+j = 0
+for image in resized_images:
+    binary_global = image > threshold_otsu(image)
+    io.imsave(f'./thresholding/resized-{file_names[j]}',binary_global)
     j = j + 1
