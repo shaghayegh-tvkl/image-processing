@@ -11,7 +11,7 @@ img_width = 150
 img_height = 150
 TRAIN_DIR = './train/'
 TEST_DIR = './test/'
-train_images_dogs_cats = [TRAIN_DIR+i for i in os.listdir(TRAIN_DIR)] # use this for full dataset
+train_images_dogs_cats = [TRAIN_DIR+i for i in os.listdir(TRAIN_DIR)] 
 test_images_dogs_cats = [TEST_DIR+i for i in os.listdir(TEST_DIR)]
 
 
@@ -46,8 +46,7 @@ def prepare_data(list_of_images):
             y.append(1)
         elif 'cat' in i:
             y.append(0)
-        #else:
-            #print('neither cat nor dog name present in images')
+
             
     return x, y
 
@@ -55,8 +54,6 @@ def prepare_data(list_of_images):
 X, Y = prepare_data(train_images_dogs_cats)
 print(K.image_data_format())
 
-
-# First split the data in two sets, 80% for training, 20% for Val/Test)
 X_train, X_val, Y_train, Y_val = train_test_split(X,Y, test_size=0.2, random_state=1)
 
 
@@ -124,7 +121,7 @@ model.save_weights('model_wieghts.h5')
 model.save('model_keras.h5')
 
 
-X_test, Y_test = prepare_data(test_images_dogs_cats) #Y_test in this case will be []
+X_test, Y_test = prepare_data(test_images_dogs_cats) 
 
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
